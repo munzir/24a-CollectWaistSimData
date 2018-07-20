@@ -42,12 +42,12 @@
  using namespace dart::dynamics;
 
  //output file
- ofstream q_out_file("../data/qWaistData.txt");
- ofstream dq_out_file("../data/dqWaistData.txt");
- ofstream ddq_out_file("../data/ddqWaistData.txt");
- ofstream M_out_file("../data/mWaistData.txt");
- ofstream Cg_out_file("../data/cgWaistData.txt");
- ofstream T_out_file("../data/torqueWaistData.txt");
+ ofstream q_out_file("../../24-ParametricIdentification-Waist/simOutData/qWaistData.txt");
+ ofstream dq_out_file("../../24-ParametricIdentification-Waist/simOutData/dqWaistData.txt");
+ ofstream ddq_out_file("../../24-ParametricIdentification-Waist/simOutData/ddqWaistData.txt");
+ ofstream M_out_file("../../24-ParametricIdentification-Waist/simOutData/mWaistData.txt");
+ ofstream Cg_out_file("../../24-ParametricIdentification-Waist/simOutData/cgWaistData.txt");
+ ofstream T_out_file("../../24-ParametricIdentification-Waist/simOutData/torqueWaistData.txt");
 
 //==========================================================================
 Controller::Controller(SkeletonPtr _robot)
@@ -121,7 +121,7 @@ void Controller::stepPose(int lineNum) {
     Eigen::VectorXd vect(17);
     std::string::size_type sz;
     cout << "Pose: " << lineNum << endl;
-    ifstream in_file("../data/filteredPosesrandom6003fullbalance0.001000tolsafe2.000000e-3filter.txt");
+    ifstream in_file("../../24-ParametricIdentification-Waist/simInData/filteredPosesrandom6003fullbalance0.001000tolsafe2.000000e-3filter.txt");
     while(getline(in_file, line)){
       i++;
       if (i != lineNum){
