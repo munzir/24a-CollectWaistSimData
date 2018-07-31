@@ -37,17 +37,29 @@
 #include <fstream>
 #include <sstream>
 
- using namespace std;
- using namespace dart;
- using namespace dart::dynamics;
+using namespace std;
+using namespace dart;
+using namespace dart::dynamics;
 
- //output file
- ofstream q_out_file("../../24-ParametricIdentification-Waist/simOutData/qWaistData.txt");
- ofstream dq_out_file("../../24-ParametricIdentification-Waist/simOutData/dqWaistData.txt");
- ofstream ddq_out_file("../../24-ParametricIdentification-Waist/simOutData/ddqWaistData.txt");
- ofstream M_out_file("../../24-ParametricIdentification-Waist/simOutData/mWaistData.txt");
- ofstream Cg_out_file("../../24-ParametricIdentification-Waist/simOutData/cgWaistData.txt");
- ofstream T_out_file("../../24-ParametricIdentification-Waist/simOutData/torqueWaistData.txt");
+//output file
+ofstream q_out_file("../../24-ParametricIdentification-Waist/simOutData/qWaistData.txt");
+ofstream dq_out_file("../../24-ParametricIdentification-Waist/simOutData/dqWaistData.txt");
+ofstream ddq_out_file("../../24-ParametricIdentification-Waist/simOutData/ddqWaistData.txt");
+ofstream M_out_file("../../24-ParametricIdentification-Waist/simOutData/mWaistData.txt");
+ofstream Cg_out_file("../../24-ParametricIdentification-Waist/simOutData/cgWaistData.txt");
+ofstream T_out_file("../../24-ParametricIdentification-Waist/simOutData/torqueWaistData.txt");
+ofstream time_out_file("../../24-ParametricIdentification-Waist/simOutData/timeWaistData.txt");
+
+//Used for constant forward/backward motion of waist
+double pi = 3.14159;
+int dir = 0;
+
+int mNumLine = 2;
+int n = 5;
+int mRecordNum = 1;
+int mTotalRecorded = 0;
+
+bool endfile = false;
 
 //==========================================================================
 Controller::Controller(SkeletonPtr _robot)
@@ -69,23 +81,20 @@ Controller::Controller(SkeletonPtr _robot)
   A = 0.8;
   // Great b -> smaller period
   b = 1;
+
+  mRobot->getDof(0)->setVelocity(1);
+
+  //get a count of how many poses we will be simulating
+  string line;
+  poses = 0;
+  ifstream in_file("../../24-ParametricIdentification-Waist/simInData/finalSetDart.txt");
+  while(getline(in_file, line)){
+    poses++;
+  }
 }
 
 //=========================================================================
 Controller::~Controller() {}
-
-
-//=========================================================================
-// void printMatrix(Eigen::MatrixXd A){
-//   for(int i=0; i<A.rows(); i++){
-//     for(int j=0; j<A.cols(); j++){
-//       std::cout << A(i,j) << ", ";
-//     }
-//     std::cout << std::endl;
-//   }
-//   std::cout << std::endl;
-// }
-
 
 //=========================================================================
 void Controller::update() {
@@ -96,7 +105,6 @@ void Controller::update() {
   Eigen::VectorXd q     = mRobot->getPositions();                 // n x 1
   Eigen::VectorXd dq    = mRobot->getVelocities();                // n x 1
 
-
   qref = q;
   dqref << 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;
   qref(0) += A*cos(b*mTime);
@@ -106,7 +114,36 @@ void Controller::update() {
   mForces = M*ddqref + Cg;
 
   // Apply the joint space forces to the robot
-  mRobot->setForces(mForces);
+    // mRobot->setForces(mForces);
+
+  //Simply set the velocity of the waist
+  if(dir == 1){
+    mRobot->getDof(0)->setVelocity(1);
+  }
+  if(dir == 0){
+    mRobot->getDof(0)->setVelocity(-1);
+  }
+
+  if(mRobot->getDof(0)->getPosition() < pi/6){
+    dir = 1;
+  }
+  if(mRobot->getDof(0)->getPosition() > 5*pi/6){
+    dir = 0;
+  }
+
+  //Record data automatically
+  if(mRecordNum == n+1){
+    stepPose(mNumLine);
+    mRecordNum = 1; //cout <<"mRecordNum RESET" << endl;
+    mNumLine++;
+  }
+
+  int v1 = rand()%100;
+  if(v1>20 && v1<22){
+    recordData(mRecordNum);
+    mRecordNum++;
+    mTotalRecorded++;
+  }
 }
 
 //=========================================================================
@@ -114,53 +151,62 @@ SkeletonPtr Controller::getRobot() const {
   return mRobot;
 }
 
-
 void Controller::stepPose(int lineNum) {
-    int i = 1;
-    string line;
-    Eigen::VectorXd vect(17);
-    std::string::size_type sz;
-    cout << "Pose: " << lineNum << endl;
-    ifstream in_file("../../24-ParametricIdentification-Waist/simInData/filteredPosesrandom6003fullbalance0.001000tolsafe2.000000e-3filter.txt");
-    while(getline(in_file, line)){
-      i++;
-      if (i != lineNum){
-        //do nothing
-      }
-      else{
-        //extract numbers from this line and set the poses
-        stringstream lineStream(line);
-  	    string t;
-  	    int count = 0;
-  	    int startNum = 8; //6dof(base) + 2 wheels <- skip these numbers
-  	    while(getline(lineStream, t, ' ')){
-  	      //if t is NOT empty, means delimiter was not found on lineStream, instead value is stored in t
-  	      if(!t.empty()){
-            //count up how many numbers have been found on the line
-  	        count++;
-  	        if(count > startNum && !lineStream.eof()){
-  	          //Put number in vector
-  	          vect(count - 9) = stod(t,&sz); //convert to double and put into vect(count - 9)
-  	        }
-  	        else if (count <= startNum){
-  	          //do nothing
-  	        }
-  	        else {
-  	          //put last number
-  	          vect(count - 9) = stod(t,&sz);
-  	        }
-  	      }
-  	    } //end while
-      } //end else
+  int i = 1;
+  string line;
+  Eigen::VectorXd vect(17);
+  std::string::size_type sz;
+  cout << "Pose: " << lineNum << endl;
+  ifstream in_file("../../24-ParametricIdentification-Waist/simInData/finalSetDart.txt");
+  //Reads every line of the file every time until the given lineNum is reached (i == lineNum)
+  while(getline(in_file, line)){
+    i++;
+    if(i == lineNum){ //i == lineNum
+      //extract numbers from this line and set the poses
+      stringstream lineStream(line);
+	    string t;
+	    int count = 0;
+	    int startNum = 8; //6dof(base) + 2 wheels <- skip these numbers
+	    while(getline(lineStream, t, ' ')){
+	      //if t is NOT empty, means delimiter was not found on lineStream, instead value is stored in t
+	      if(!t.empty()){
+          //count up how many numbers have been found on the line
+	        count++;
+	        if(count > startNum && !lineStream.eof()){
+	          //Put number in vector
+	          vect(count - 9) = stod(t,&sz); //convert to double and put into vect(count - 9)
+	        }
+	        else if (count <= startNum){
+	          //do nothing
+	        }
+	        else {
+	          //put last number
+	          vect(count - 9) = stod(t,&sz);
+	        }
+	      }
+	    } //end while
+      endfile = false;
+      break;
+    } //end if
+
+    else if (i == poses){ //if end of file is reached, set bool endfile to true so that program exits
+      endfile = true;
+      break;
     }
-    in_file.close();
-    //set position for all joints except waist
-    for(int k = 1; k<17; k++){
-      mRobot->getDof(k)->setPosition(vect(k));
-    }
+
+  }
+  if(endfile){
+    cout << "Reached EOF" << endl << endl << endl;std::exit(0);
+  }
+  in_file.close();
+  //set position for all joints except waist
+  for(int k = 1; k<17; k++){
+    mRobot->getDof(k)->setPosition(vect(k));
+  }
 }
 
 void Controller::recordData(int recordNum){
+
   Eigen::VectorXd q = mRobot->getPositions();
   q_out_file << q.transpose() << endl;
 
@@ -175,6 +221,8 @@ void Controller::recordData(int recordNum){
 
   Eigen::VectorXd Cg = mRobot->getCoriolisAndGravityForces();
   Cg_out_file << Cg.transpose() << endl;
+
+  time_out_file << mTime << endl;
 
   // cout << "Torque: " << mForces(0) << endl;
   T_out_file << mForces(0) << endl;
