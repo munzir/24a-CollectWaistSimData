@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/krang/dart/24a-CollectWaistSimData
+CMAKE_SOURCE_DIR = /home/munzir/dart_test/24a-CollectWaistSimData
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/krang/dart/24a-CollectWaistSimData/build
+CMAKE_BINARY_DIR = /home/munzir/dart_test/24a-CollectWaistSimData/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/waistKrang.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/waistKrang.dir/flags.make
 
 CMakeFiles/waistKrang.dir/Main.cpp.o: CMakeFiles/waistKrang.dir/flags.make
 CMakeFiles/waistKrang.dir/Main.cpp.o: ../Main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/krang/dart/24a-CollectWaistSimData/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/waistKrang.dir/Main.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/waistKrang.dir/Main.cpp.o -c /home/krang/dart/24a-CollectWaistSimData/Main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/munzir/dart_test/24a-CollectWaistSimData/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/waistKrang.dir/Main.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/waistKrang.dir/Main.cpp.o -c /home/munzir/dart_test/24a-CollectWaistSimData/Main.cpp
 
 CMakeFiles/waistKrang.dir/Main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/waistKrang.dir/Main.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/krang/dart/24a-CollectWaistSimData/Main.cpp > CMakeFiles/waistKrang.dir/Main.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/munzir/dart_test/24a-CollectWaistSimData/Main.cpp > CMakeFiles/waistKrang.dir/Main.cpp.i
 
 CMakeFiles/waistKrang.dir/Main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/waistKrang.dir/Main.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/krang/dart/24a-CollectWaistSimData/Main.cpp -o CMakeFiles/waistKrang.dir/Main.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/munzir/dart_test/24a-CollectWaistSimData/Main.cpp -o CMakeFiles/waistKrang.dir/Main.cpp.s
 
 CMakeFiles/waistKrang.dir/Main.cpp.o.requires:
 
@@ -83,16 +83,16 @@ CMakeFiles/waistKrang.dir/Main.cpp.o.provides.build: CMakeFiles/waistKrang.dir/M
 
 CMakeFiles/waistKrang.dir/MyWindow.cpp.o: CMakeFiles/waistKrang.dir/flags.make
 CMakeFiles/waistKrang.dir/MyWindow.cpp.o: ../MyWindow.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/krang/dart/24a-CollectWaistSimData/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/waistKrang.dir/MyWindow.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/waistKrang.dir/MyWindow.cpp.o -c /home/krang/dart/24a-CollectWaistSimData/MyWindow.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/munzir/dart_test/24a-CollectWaistSimData/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/waistKrang.dir/MyWindow.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/waistKrang.dir/MyWindow.cpp.o -c /home/munzir/dart_test/24a-CollectWaistSimData/MyWindow.cpp
 
 CMakeFiles/waistKrang.dir/MyWindow.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/waistKrang.dir/MyWindow.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/krang/dart/24a-CollectWaistSimData/MyWindow.cpp > CMakeFiles/waistKrang.dir/MyWindow.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/munzir/dart_test/24a-CollectWaistSimData/MyWindow.cpp > CMakeFiles/waistKrang.dir/MyWindow.cpp.i
 
 CMakeFiles/waistKrang.dir/MyWindow.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/waistKrang.dir/MyWindow.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/krang/dart/24a-CollectWaistSimData/MyWindow.cpp -o CMakeFiles/waistKrang.dir/MyWindow.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/munzir/dart_test/24a-CollectWaistSimData/MyWindow.cpp -o CMakeFiles/waistKrang.dir/MyWindow.cpp.s
 
 CMakeFiles/waistKrang.dir/MyWindow.cpp.o.requires:
 
@@ -107,16 +107,16 @@ CMakeFiles/waistKrang.dir/MyWindow.cpp.o.provides.build: CMakeFiles/waistKrang.d
 
 CMakeFiles/waistKrang.dir/Controller.cpp.o: CMakeFiles/waistKrang.dir/flags.make
 CMakeFiles/waistKrang.dir/Controller.cpp.o: ../Controller.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/krang/dart/24a-CollectWaistSimData/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/waistKrang.dir/Controller.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/waistKrang.dir/Controller.cpp.o -c /home/krang/dart/24a-CollectWaistSimData/Controller.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/munzir/dart_test/24a-CollectWaistSimData/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/waistKrang.dir/Controller.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/waistKrang.dir/Controller.cpp.o -c /home/munzir/dart_test/24a-CollectWaistSimData/Controller.cpp
 
 CMakeFiles/waistKrang.dir/Controller.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/waistKrang.dir/Controller.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/krang/dart/24a-CollectWaistSimData/Controller.cpp > CMakeFiles/waistKrang.dir/Controller.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/munzir/dart_test/24a-CollectWaistSimData/Controller.cpp > CMakeFiles/waistKrang.dir/Controller.cpp.i
 
 CMakeFiles/waistKrang.dir/Controller.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/waistKrang.dir/Controller.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/krang/dart/24a-CollectWaistSimData/Controller.cpp -o CMakeFiles/waistKrang.dir/Controller.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/munzir/dart_test/24a-CollectWaistSimData/Controller.cpp -o CMakeFiles/waistKrang.dir/Controller.cpp.s
 
 CMakeFiles/waistKrang.dir/Controller.cpp.o.requires:
 
@@ -142,32 +142,32 @@ waistKrang: CMakeFiles/waistKrang.dir/Main.cpp.o
 waistKrang: CMakeFiles/waistKrang.dir/MyWindow.cpp.o
 waistKrang: CMakeFiles/waistKrang.dir/Controller.cpp.o
 waistKrang: CMakeFiles/waistKrang.dir/build.make
-waistKrang: /usr/local/lib/libdart-utils-urdf.so.6.3.0
-waistKrang: /usr/local/lib/libdart-gui.so.6.3.0
+waistKrang: /usr/lib/libdart-utils-urdf.so.6.5.0
+waistKrang: /usr/lib/libdart-gui.so.6.5.0
 waistKrang: /usr/lib/x86_64-linux-gnu/liburdfdom_sensor.so
 waistKrang: /usr/lib/x86_64-linux-gnu/liburdfdom_model_state.so
 waistKrang: /usr/lib/x86_64-linux-gnu/liburdfdom_model.so
 waistKrang: /usr/lib/x86_64-linux-gnu/liburdfdom_world.so
 waistKrang: /usr/lib/x86_64-linux-gnu/libconsole_bridge.so
-waistKrang: /usr/local/lib/libdart-utils.so.6.3.0
-waistKrang: /usr/local/lib/libdart.so.6.3.0
+waistKrang: /usr/lib/libdart-utils.so.6.5.0
+waistKrang: /usr/lib/libdart.so.6.5.0
 waistKrang: /usr/lib/x86_64-linux-gnu/libccd.so
 waistKrang: /usr/lib/libfcl.so
 waistKrang: /usr/lib/x86_64-linux-gnu/libassimp.so
 waistKrang: /usr/lib/x86_64-linux-gnu/libboost_regex.so
 waistKrang: /usr/lib/x86_64-linux-gnu/libboost_system.so
-waistKrang: /usr/local/lib/libdart-external-odelcpsolver.so.6.3.0
-waistKrang: /usr/lib/x86_64-linux-gnu/libtinyxml.so
+waistKrang: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
+waistKrang: /usr/lib/libdart-external-odelcpsolver.so.6.5.0
 waistKrang: /usr/lib/x86_64-linux-gnu/libtinyxml2.so
 waistKrang: /usr/lib/x86_64-linux-gnu/libglut.so
 waistKrang: /usr/lib/x86_64-linux-gnu/libXmu.so
 waistKrang: /usr/lib/x86_64-linux-gnu/libXi.so
 waistKrang: /usr/lib/x86_64-linux-gnu/libGLU.so
 waistKrang: /usr/lib/x86_64-linux-gnu/libGL.so
-waistKrang: /usr/local/lib/libdart-external-lodepng.so.6.3.0
-waistKrang: /usr/local/lib/libdart-external-imgui.so.6.3.0
+waistKrang: /usr/lib/libdart-external-lodepng.so.6.5.0
+waistKrang: /usr/lib/libdart-external-imgui.so.6.5.0
 waistKrang: CMakeFiles/waistKrang.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/krang/dart/24a-CollectWaistSimData/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable waistKrang"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/munzir/dart_test/24a-CollectWaistSimData/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable waistKrang"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/waistKrang.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -186,6 +186,6 @@ CMakeFiles/waistKrang.dir/clean:
 .PHONY : CMakeFiles/waistKrang.dir/clean
 
 CMakeFiles/waistKrang.dir/depend:
-	cd /home/krang/dart/24a-CollectWaistSimData/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/krang/dart/24a-CollectWaistSimData /home/krang/dart/24a-CollectWaistSimData /home/krang/dart/24a-CollectWaistSimData/build /home/krang/dart/24a-CollectWaistSimData/build /home/krang/dart/24a-CollectWaistSimData/build/CMakeFiles/waistKrang.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/munzir/dart_test/24a-CollectWaistSimData/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/munzir/dart_test/24a-CollectWaistSimData /home/munzir/dart_test/24a-CollectWaistSimData /home/munzir/dart_test/24a-CollectWaistSimData/build /home/munzir/dart_test/24a-CollectWaistSimData/build /home/munzir/dart_test/24a-CollectWaistSimData/build/CMakeFiles/waistKrang.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/waistKrang.dir/depend
 

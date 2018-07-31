@@ -83,6 +83,9 @@ private:
   //period
   double b;
 
+  //number of poses in input file
+  int poses;
+
     /// \brief Proportional gain for the virtual spring forces at the end effector
   Eigen::Matrix<double,DOF,DOF> mKp;
 

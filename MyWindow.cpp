@@ -44,7 +44,7 @@ MyWindow::MyWindow(Controller* _controller)
   mLineNum = 2;
 
   mRecordNum = 1;
-  n = 10;
+  n = 5;
 
   poseSwitched = false;
 }
@@ -78,7 +78,6 @@ void MyWindow::keyboard(unsigned char _key, int _x, int _y) {
       }
       else{
         poseSwitched = false;
-        // mRecordNum = 1;
         std::cout << "WARNING: Change pose (p) before recording more data." << std::endl;
       }
       break;
