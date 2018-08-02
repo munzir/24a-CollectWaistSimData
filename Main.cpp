@@ -96,7 +96,7 @@ int main(int argc, char* argv[])
   //world link (fixed)
   //fixbase link (fixed to prev)
   //Base (fixed to prev)
-  inPos(0) = 3*pi/4; //Waist (revolute to prev)
+  inPos(0) = 4*pi/6; //Waist (revolute to prev)
   inPos(1) = pi; //Torso (should be pi in URDF..)
   inPos(2) = 0;
   inPos(3) = 0;

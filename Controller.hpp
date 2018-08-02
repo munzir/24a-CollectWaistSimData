@@ -74,6 +74,9 @@ private:
   /// \brief Control forces
   Eigen::VectorXd mForces;
 
+  // Erroneous Force
+  double mForceErr;
+
   //time variable
   double mTime;
 
