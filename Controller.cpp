@@ -53,6 +53,8 @@ ofstream time_out_file("../../24-ParametricIdentification-Waist/simOutData/timeW
 //Used for constant forward/backward motion of waist
 double pi = 3.14159;
 int dir = 0;
+double maxPos = 5*pi/6;
+double minPos = pi/6;
 
 int mNumLine = 2;
 int n = 5;
@@ -82,7 +84,7 @@ Controller::Controller(SkeletonPtr _robot)
   // Great b -> smaller period
   b = 1;
 
-  mRobot->getDof(0)->setVelocity(1);
+  // mRobot->getDof(0)->setVelocity(1);
 
   //get a count of how many poses we will be simulating
   string line;
@@ -95,6 +97,13 @@ Controller::Controller(SkeletonPtr _robot)
 
 //=========================================================================
 Controller::~Controller() {}
+
+//==============================================================================
+double error(double dq) {
+  double err;
+  err = -( 2 / ( 1 + exp(-2*dq)) -1 );
+  return err;
+}
 
 //=========================================================================
 void Controller::update() {
@@ -113,10 +122,16 @@ void Controller::update() {
   mTime += 0.001;
   mForces = M*ddqref + Cg;
 
+  //Incorporate error in mForce
+  double errCoeff = 6.0; //random value
+  mForceErr = mForces(0) + errCoeff*error(dq(0));
+
   // Apply the joint space forces to the robot
     // mRobot->setForces(mForces);
+  	// mRobot->getDof(0)->setForce(mForceErr);
 
-  //Simply set the velocity of the waist
+
+  //Simply set the velocity of the waist (testing zero accel case)
   if(dir == 1){
     mRobot->getDof(0)->setVelocity(1);
   }
@@ -124,10 +139,10 @@ void Controller::update() {
     mRobot->getDof(0)->setVelocity(-1);
   }
 
-  if(mRobot->getDof(0)->getPosition() < pi/6){
+  if(mRobot->getDof(0)->getPosition() < minPos){
     dir = 1;
   }
-  if(mRobot->getDof(0)->getPosition() > 5*pi/6){
+  if(mRobot->getDof(0)->getPosition() > maxPos){
     dir = 0;
   }
 
@@ -139,6 +154,8 @@ void Controller::update() {
   }
 
   int v1 = rand()%100;
+  //if randomly generated number is within arbitrary range of 2, record data
+  //larger range increases rate of data recording
   if(v1>20 && v1<22){
     recordData(mRecordNum);
     mRecordNum++;
@@ -217,7 +234,7 @@ void Controller::recordData(int recordNum){
   ddq_out_file << ddq.transpose() << endl;
 
   Eigen::MatrixXd M = mRobot->getMassMatrix();
-  M_out_file << M << endl << endl << endl;
+  M_out_file << M << endl;
 
   Eigen::VectorXd Cg = mRobot->getCoriolisAndGravityForces();
   Cg_out_file << Cg.transpose() << endl;
