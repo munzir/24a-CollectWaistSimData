@@ -55,7 +55,7 @@ dart::dynamics::SkeletonPtr createKrang() {
   // Load the Skeleton from a file
   DartLoader loader;
   SkeletonPtr krang =
-     loader.parseSkeleton("/home/munzir/dart_test/09-URDF/KrangWaist/krang_fixed_base.urdf");
+     loader.parseSkeleton("/home/areeb/dart/09-URDF/KrangWaist/krang_fixed_base.urdf");
   krang->setName("krang");
 
   // Position its base in a reasonable way
