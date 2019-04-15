@@ -41,6 +41,21 @@ using namespace std;
 using namespace dart;
 using namespace dart::dynamics;
 
+dart::dynamics::BodyNode* baseNode;
+dart::dynamics::BodyNode* spineNode;
+dart::dynamics::BodyNode* bracketNode;
+
+Eigen::Isometry3d worldTransformBracket;
+Eigen::Isometry3d relTransformBS;
+Eigen::Isometry3d relTransformSB;
+Eigen::Isometry3d relTransformBase;
+
+Eigen::Vector3d relTranslationBase;
+Eigen::Vector3d worldTranslationBase;
+
+Eigen::Matrix3d relRotationBase;
+Eigen::Matrix3d worldRotationBase;
+
 //output file
 ofstream q_out_file("../../24-ParametricIdentification-Waist/simOutData/qWaistData.txt");
 ofstream dq_out_file("../../24-ParametricIdentification-Waist/simOutData/dqWaistData.txt");
@@ -93,6 +108,10 @@ Controller::Controller(SkeletonPtr _robot)
   while(getline(in_file, line)){
     poses++;
   }
+
+  baseNode = mRobot->getBodyNode(0);
+  spineNode = mRobot->getBodyNode(1);
+  bracketNode = mRobot->getBodyNode(2);
 }
 
 //=========================================================================
@@ -157,9 +176,32 @@ void Controller::update() {
   //if randomly generated number is within arbitrary range of 2, record data
   //larger range increases rate of data recording
   if(v1>20 && v1<22){
-    recordData(mRecordNum);
-    mRecordNum++;
-    mTotalRecorded++;
+    // recordData(mRecordNum);
+    // mRecordNum++;
+    // mTotalRecorded++;
+
+
+    // Calculate angle of base from torso and waist orientation
+    // Get transformations
+    worldTransformBracket = bracketNode->getTransform();
+    relTransformBS = spineNode->getTransform(bracketNode);
+    relTransformSB = baseNode->getTransform(spineNode);
+    // Multiply transformations
+    relTransformBase = worldTransformBracket*relTransformBS*relTransformSB;
+
+    // Get translation and rotation from above computation
+    relTranslationBase = relTransformBase.translation();
+    relRotationBase = relTransformBase.rotation
+    // Get translation and rotation directly
+    worldTranslationBase = baseNode->getTransform().translation();
+    worldRotationBase = baseNode->getTransform().rotation();
+
+    // Print out both computed and directly-derived transformations to compare
+    cout << "RelTrans: " << relTranslationBase(0) << " " << relTranslationBase(1) << " " << relTranslationBase(2) << endl;
+    cout << "WrdTrans: " << worldTranslationBase(0) << " " << worldTranslationBase(1) << " " << worldTranslationBase(2) << endl;
+    cout << "RelRot: " << relRotationBase(0) << " " << relRotationBase(1) << " " << relRotationBase(2) << " " << relRotationBase(3) << " " << relRotationBase(4) << " " << relRotationBase(5) << " " << relRotationBase(6) << " " << relRotationBase(7) << " " << relRotationBase(8) << endl;
+    cout << "WrdRot: " << worldRotationBase(0) << " " << worldRotationBase(1) << " " << worldRotationBase(2) << " " << worldRotationBase(3) << " " << worldRotationBase(4) << " " << worldRotationBase(5) << " " << worldRotationBase(6) << " " << worldRotationBase(7) << " " << worldRotationBase(8) << endl;
+    cout << endl;
   }
 }
 

@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/waistKrang.dir/Controller.cpp.o"
   "CMakeFiles/waistKrang.dir/Main.cpp.o"
   "CMakeFiles/waistKrang.dir/MyWindow.cpp.o"
-  "CMakeFiles/waistKrang.dir/Controller.cpp.o"
   "waistKrang.pdb"
   "waistKrang"
 )
