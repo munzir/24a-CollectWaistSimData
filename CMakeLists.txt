@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.0.0)
 
 project(waistKrang)
 
-find_package(DART 6.7.0 REQUIRED COMPONENTS utils-urdf gui CONFIG)
+find_package(DART 6.6.0 REQUIRED COMPONENTS utils-urdf gui CONFIG)
 
 add_compile_options(-std=c++11)
 

@@ -37,7 +37,7 @@
 #include <dart/dart.hpp>
 
 //ZED include
-#include <sl/Camera.hpp>
+// #include <sl/Camera.hpp>
 
 #define DOF 17
 
@@ -59,6 +59,8 @@ public:
   /// \brief
   void update();
 
+  Eigen::Matrix4d transform2Mat(Eigen::Isometry3d iso);
+
   /// \brief Get robot
   dart::dynamics::SkeletonPtr getRobot() const;
 
@@ -75,7 +77,7 @@ public:
   void closeZED();
 
   // \ Zed transform function
-  void tranformZEDPose(sl::Transform &pose, float tx);
+  // void tranformZEDPose(sl::Transform &pose, float tx);
 
 private:
 

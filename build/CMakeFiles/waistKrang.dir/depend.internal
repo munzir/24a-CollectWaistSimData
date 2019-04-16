@@ -380,27 +380,21 @@ CMakeFiles/waistKrang.dir/Controller.cpp.o
  /usr/local/include/dart/config.hpp
  /usr/local/include/dart/constraint/BalanceConstraint.hpp
  /usr/local/include/dart/constraint/BallJointConstraint.hpp
- /usr/local/include/dart/constraint/BoxedLcpConstraintSolver.hpp
- /usr/local/include/dart/constraint/BoxedLcpSolver.hpp
  /usr/local/include/dart/constraint/ConstrainedGroup.hpp
  /usr/local/include/dart/constraint/ConstraintBase.hpp
  /usr/local/include/dart/constraint/ConstraintSolver.hpp
  /usr/local/include/dart/constraint/ContactConstraint.hpp
- /usr/local/include/dart/constraint/DantzigBoxedLcpSolver.hpp
  /usr/local/include/dart/constraint/DantzigLCPSolver.hpp
  /usr/local/include/dart/constraint/JointConstraint.hpp
  /usr/local/include/dart/constraint/JointCoulombFrictionConstraint.hpp
  /usr/local/include/dart/constraint/JointLimitConstraint.hpp
  /usr/local/include/dart/constraint/LCPSolver.hpp
- /usr/local/include/dart/constraint/MimicMotorConstraint.hpp
  /usr/local/include/dart/constraint/PGSLCPSolver.hpp
- /usr/local/include/dart/constraint/PgsBoxedLcpSolver.hpp
  /usr/local/include/dart/constraint/ServoMotorConstraint.hpp
  /usr/local/include/dart/constraint/SmartPointer.hpp
  /usr/local/include/dart/constraint/SoftContactConstraint.hpp
  /usr/local/include/dart/constraint/WeldJointConstraint.hpp
  /usr/local/include/dart/constraint/constraint.hpp
- /usr/local/include/dart/constraint/detail/BoxedLcpSolver-impl.hpp
  /usr/local/include/dart/dart.hpp
  /usr/local/include/dart/dynamics/ArrowShape.hpp
  /usr/local/include/dart/dynamics/AssimpInputResourceAdaptor.hpp
@@ -518,23 +512,15 @@ CMakeFiles/waistKrang.dir/Controller.cpp.o
  /usr/local/include/dart/math/Geometry.hpp
  /usr/local/include/dart/math/Helpers.hpp
  /usr/local/include/dart/math/MathTypes.hpp
- /usr/local/include/dart/math/Random.hpp
  /usr/local/include/dart/math/detail/ConfigurationSpace.hpp
- /usr/local/include/dart/math/detail/Random-impl.hpp
  /usr/local/include/dart/math/math.hpp
  /usr/local/include/dart/optimizer/Function.hpp
- /usr/local/include/dart/optimizer/GenericMultiObjectiveProblem.hpp
  /usr/local/include/dart/optimizer/GradientDescentSolver.hpp
- /usr/local/include/dart/optimizer/MultiObjectiveProblem.hpp
- /usr/local/include/dart/optimizer/MultiObjectiveSolver.hpp
- /usr/local/include/dart/optimizer/Population.hpp
  /usr/local/include/dart/optimizer/Problem.hpp
  /usr/local/include/dart/optimizer/Solver.hpp
  /usr/local/include/dart/optimizer/optimizer.hpp
  /usr/local/include/dart/simulation/Recording.hpp
- /usr/local/include/dart/simulation/SmartPointer.hpp
  /usr/local/include/dart/simulation/World.hpp
- /usr/local/include/dart/simulation/detail/World-impl.hpp
  /usr/local/include/dart/simulation/simulation.hpp
  /usr/local/include/nlopt.h
  /usr/local/include/nlopt.hpp
@@ -918,27 +904,21 @@ CMakeFiles/waistKrang.dir/Main.cpp.o
  /usr/local/include/dart/config.hpp
  /usr/local/include/dart/constraint/BalanceConstraint.hpp
  /usr/local/include/dart/constraint/BallJointConstraint.hpp
- /usr/local/include/dart/constraint/BoxedLcpConstraintSolver.hpp
- /usr/local/include/dart/constraint/BoxedLcpSolver.hpp
  /usr/local/include/dart/constraint/ConstrainedGroup.hpp
  /usr/local/include/dart/constraint/ConstraintBase.hpp
  /usr/local/include/dart/constraint/ConstraintSolver.hpp
  /usr/local/include/dart/constraint/ContactConstraint.hpp
- /usr/local/include/dart/constraint/DantzigBoxedLcpSolver.hpp
  /usr/local/include/dart/constraint/DantzigLCPSolver.hpp
  /usr/local/include/dart/constraint/JointConstraint.hpp
  /usr/local/include/dart/constraint/JointCoulombFrictionConstraint.hpp
  /usr/local/include/dart/constraint/JointLimitConstraint.hpp
  /usr/local/include/dart/constraint/LCPSolver.hpp
- /usr/local/include/dart/constraint/MimicMotorConstraint.hpp
  /usr/local/include/dart/constraint/PGSLCPSolver.hpp
- /usr/local/include/dart/constraint/PgsBoxedLcpSolver.hpp
  /usr/local/include/dart/constraint/ServoMotorConstraint.hpp
  /usr/local/include/dart/constraint/SmartPointer.hpp
  /usr/local/include/dart/constraint/SoftContactConstraint.hpp
  /usr/local/include/dart/constraint/WeldJointConstraint.hpp
  /usr/local/include/dart/constraint/constraint.hpp
- /usr/local/include/dart/constraint/detail/BoxedLcpSolver-impl.hpp
  /usr/local/include/dart/dart.hpp
  /usr/local/include/dart/dynamics/ArrowShape.hpp
  /usr/local/include/dart/dynamics/AssimpInputResourceAdaptor.hpp
@@ -1043,20 +1023,19 @@ CMakeFiles/waistKrang.dir/Main.cpp.o
  /usr/local/include/dart/dynamics/detail/UniversalJointAspect.hpp
  /usr/local/include/dart/dynamics/dynamics.hpp
  /usr/local/include/dart/external/ikfast/ikfast.h
+ /usr/local/include/dart/gui/GLFuncs.hpp
+ /usr/local/include/dart/gui/GlutWindow.hpp
+ /usr/local/include/dart/gui/GraphWindow.hpp
+ /usr/local/include/dart/gui/LoadGlut.hpp
  /usr/local/include/dart/gui/LoadOpengl.hpp
+ /usr/local/include/dart/gui/MotionBlurSimWindow.hpp
  /usr/local/include/dart/gui/OpenGLRenderInterface.hpp
  /usr/local/include/dart/gui/RenderInterface.hpp
+ /usr/local/include/dart/gui/SimWindow.hpp
+ /usr/local/include/dart/gui/SoftSimWindow.hpp
  /usr/local/include/dart/gui/Trackball.hpp
- /usr/local/include/dart/gui/glut/GLUTFuncs.hpp
- /usr/local/include/dart/gui/glut/GraphWindow.hpp
- /usr/local/include/dart/gui/glut/LoadGlut.hpp
- /usr/local/include/dart/gui/glut/MotionBlurSimWindow.hpp
- /usr/local/include/dart/gui/glut/SimWindow.hpp
- /usr/local/include/dart/gui/glut/SoftSimWindow.hpp
- /usr/local/include/dart/gui/glut/Win2D.hpp
- /usr/local/include/dart/gui/glut/Win3D.hpp
- /usr/local/include/dart/gui/glut/Window.hpp
- /usr/local/include/dart/gui/glut/glut.hpp
+ /usr/local/include/dart/gui/Win2D.hpp
+ /usr/local/include/dart/gui/Win3D.hpp
  /usr/local/include/dart/gui/gui.hpp
  /usr/local/include/dart/integration/EulerIntegrator.hpp
  /usr/local/include/dart/integration/Integrator.hpp
@@ -1071,23 +1050,15 @@ CMakeFiles/waistKrang.dir/Main.cpp.o
  /usr/local/include/dart/math/Geometry.hpp
  /usr/local/include/dart/math/Helpers.hpp
  /usr/local/include/dart/math/MathTypes.hpp
- /usr/local/include/dart/math/Random.hpp
  /usr/local/include/dart/math/detail/ConfigurationSpace.hpp
- /usr/local/include/dart/math/detail/Random-impl.hpp
  /usr/local/include/dart/math/math.hpp
  /usr/local/include/dart/optimizer/Function.hpp
- /usr/local/include/dart/optimizer/GenericMultiObjectiveProblem.hpp
  /usr/local/include/dart/optimizer/GradientDescentSolver.hpp
- /usr/local/include/dart/optimizer/MultiObjectiveProblem.hpp
- /usr/local/include/dart/optimizer/MultiObjectiveSolver.hpp
- /usr/local/include/dart/optimizer/Population.hpp
  /usr/local/include/dart/optimizer/Problem.hpp
  /usr/local/include/dart/optimizer/Solver.hpp
  /usr/local/include/dart/optimizer/optimizer.hpp
  /usr/local/include/dart/simulation/Recording.hpp
- /usr/local/include/dart/simulation/SmartPointer.hpp
  /usr/local/include/dart/simulation/World.hpp
- /usr/local/include/dart/simulation/detail/World-impl.hpp
  /usr/local/include/dart/simulation/simulation.hpp
  /usr/local/include/dart/utils/CompositeResourceRetriever.hpp
  /usr/local/include/dart/utils/PackageResourceRetriever.hpp
@@ -1475,27 +1446,21 @@ CMakeFiles/waistKrang.dir/MyWindow.cpp.o
  /usr/local/include/dart/config.hpp
  /usr/local/include/dart/constraint/BalanceConstraint.hpp
  /usr/local/include/dart/constraint/BallJointConstraint.hpp
- /usr/local/include/dart/constraint/BoxedLcpConstraintSolver.hpp
- /usr/local/include/dart/constraint/BoxedLcpSolver.hpp
  /usr/local/include/dart/constraint/ConstrainedGroup.hpp
  /usr/local/include/dart/constraint/ConstraintBase.hpp
  /usr/local/include/dart/constraint/ConstraintSolver.hpp
  /usr/local/include/dart/constraint/ContactConstraint.hpp
- /usr/local/include/dart/constraint/DantzigBoxedLcpSolver.hpp
  /usr/local/include/dart/constraint/DantzigLCPSolver.hpp
  /usr/local/include/dart/constraint/JointConstraint.hpp
  /usr/local/include/dart/constraint/JointCoulombFrictionConstraint.hpp
  /usr/local/include/dart/constraint/JointLimitConstraint.hpp
  /usr/local/include/dart/constraint/LCPSolver.hpp
- /usr/local/include/dart/constraint/MimicMotorConstraint.hpp
  /usr/local/include/dart/constraint/PGSLCPSolver.hpp
- /usr/local/include/dart/constraint/PgsBoxedLcpSolver.hpp
  /usr/local/include/dart/constraint/ServoMotorConstraint.hpp
  /usr/local/include/dart/constraint/SmartPointer.hpp
  /usr/local/include/dart/constraint/SoftContactConstraint.hpp
  /usr/local/include/dart/constraint/WeldJointConstraint.hpp
  /usr/local/include/dart/constraint/constraint.hpp
- /usr/local/include/dart/constraint/detail/BoxedLcpSolver-impl.hpp
  /usr/local/include/dart/dart.hpp
  /usr/local/include/dart/dynamics/ArrowShape.hpp
  /usr/local/include/dart/dynamics/AssimpInputResourceAdaptor.hpp
@@ -1600,20 +1565,19 @@ CMakeFiles/waistKrang.dir/MyWindow.cpp.o
  /usr/local/include/dart/dynamics/detail/UniversalJointAspect.hpp
  /usr/local/include/dart/dynamics/dynamics.hpp
  /usr/local/include/dart/external/ikfast/ikfast.h
+ /usr/local/include/dart/gui/GLFuncs.hpp
+ /usr/local/include/dart/gui/GlutWindow.hpp
+ /usr/local/include/dart/gui/GraphWindow.hpp
+ /usr/local/include/dart/gui/LoadGlut.hpp
  /usr/local/include/dart/gui/LoadOpengl.hpp
+ /usr/local/include/dart/gui/MotionBlurSimWindow.hpp
  /usr/local/include/dart/gui/OpenGLRenderInterface.hpp
  /usr/local/include/dart/gui/RenderInterface.hpp
+ /usr/local/include/dart/gui/SimWindow.hpp
+ /usr/local/include/dart/gui/SoftSimWindow.hpp
  /usr/local/include/dart/gui/Trackball.hpp
- /usr/local/include/dart/gui/glut/GLUTFuncs.hpp
- /usr/local/include/dart/gui/glut/GraphWindow.hpp
- /usr/local/include/dart/gui/glut/LoadGlut.hpp
- /usr/local/include/dart/gui/glut/MotionBlurSimWindow.hpp
- /usr/local/include/dart/gui/glut/SimWindow.hpp
- /usr/local/include/dart/gui/glut/SoftSimWindow.hpp
- /usr/local/include/dart/gui/glut/Win2D.hpp
- /usr/local/include/dart/gui/glut/Win3D.hpp
- /usr/local/include/dart/gui/glut/Window.hpp
- /usr/local/include/dart/gui/glut/glut.hpp
+ /usr/local/include/dart/gui/Win2D.hpp
+ /usr/local/include/dart/gui/Win3D.hpp
  /usr/local/include/dart/gui/gui.hpp
  /usr/local/include/dart/integration/EulerIntegrator.hpp
  /usr/local/include/dart/integration/Integrator.hpp
@@ -1628,21 +1592,13 @@ CMakeFiles/waistKrang.dir/MyWindow.cpp.o
  /usr/local/include/dart/math/Geometry.hpp
  /usr/local/include/dart/math/Helpers.hpp
  /usr/local/include/dart/math/MathTypes.hpp
- /usr/local/include/dart/math/Random.hpp
  /usr/local/include/dart/math/detail/ConfigurationSpace.hpp
- /usr/local/include/dart/math/detail/Random-impl.hpp
  /usr/local/include/dart/math/math.hpp
  /usr/local/include/dart/optimizer/Function.hpp
- /usr/local/include/dart/optimizer/GenericMultiObjectiveProblem.hpp
  /usr/local/include/dart/optimizer/GradientDescentSolver.hpp
- /usr/local/include/dart/optimizer/MultiObjectiveProblem.hpp
- /usr/local/include/dart/optimizer/MultiObjectiveSolver.hpp
- /usr/local/include/dart/optimizer/Population.hpp
  /usr/local/include/dart/optimizer/Problem.hpp
  /usr/local/include/dart/optimizer/Solver.hpp
  /usr/local/include/dart/optimizer/optimizer.hpp
  /usr/local/include/dart/simulation/Recording.hpp
- /usr/local/include/dart/simulation/SmartPointer.hpp
  /usr/local/include/dart/simulation/World.hpp
- /usr/local/include/dart/simulation/detail/World-impl.hpp
  /usr/local/include/dart/simulation/simulation.hpp

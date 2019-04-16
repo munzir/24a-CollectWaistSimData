@@ -55,7 +55,7 @@ dart::dynamics::SkeletonPtr createKrang() {
   // Load the Skeleton from a file
   DartLoader loader;
   SkeletonPtr krang =
-     loader.parseSkeleton("/home/areeb/dart/09-URDF/KrangZed/KrangZed.urdf");
+     loader.parseSkeleton("/home/areeb/dart/09-URDF/KrangZed/KrangZedFixedBase.urdf");
   krang->setName("krang");
 
   // Position its base in a reasonable way
@@ -92,7 +92,7 @@ int main(int argc, char* argv[])
 
   double pi = M_PI;
 
-  Eigen::VectorXd inPos(17);
+  Eigen::VectorXd inPos(16);
   //world link (fixed)
   //fixbase link (fixed to prev)
   //Base (fixed to prev)
@@ -112,7 +112,6 @@ int main(int argc, char* argv[])
   inPos(13) = 0;
   inPos(14) = 0;
   inPos(15) = 0;
-  inPos(16) = 0;
 
   krang->setPositions(inPos);
 
@@ -120,13 +119,22 @@ int main(int argc, char* argv[])
   world->addSkeleton(krang);
 
   int numBodies = krang->getNumBodyNodes();
+  int numJoints = krang->getNumJoints();
 
   krang->getJoint(0)->setActuatorType(Joint::ActuatorType::LOCKED);
 
-  for(int i = 2; i<numBodies; i++) {
+  for(int i = 2; i<numJoints; i++) {
     krang->getJoint(i)->setActuatorType(Joint::ActuatorType::LOCKED);
   }
 
+  cout << "BODY NODES:" << endl;
+  for(int i = 0; i<numBodies; i++) {
+    cout << i << ": " << krang->getBodyNode(i)->getName() << endl;
+  }
+  cout << endl << "JOINTS:" << endl;
+  for(int i = 0; i < numJoints; i++){
+    cout << i << ": " << krang->getJoint(i)->getName() << endl;
+  }
 
   // create and initialize the world
   Eigen::Vector3d gravity(0.0, -9.81, 0.0);
