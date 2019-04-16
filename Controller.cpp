@@ -40,12 +40,17 @@
 using namespace std;
 using namespace dart;
 using namespace dart::dynamics;
+using namespace sl;
 
+// Transform objects
 dart::dynamics::BodyNode* baseNode;
 dart::dynamics::BodyNode* spineNode;
 dart::dynamics::BodyNode* bracketNode;
+dart::dynamics::BodyNode* zedHolderNode;
 
 Eigen::Isometry3d worldTransformBracket;
+Eigen::Isometry3d relTransformCH;
+Eigen::Isometry3d relTransformHB;
 Eigen::Isometry3d relTransformBS;
 Eigen::Isometry3d relTransformSB;
 Eigen::Isometry3d relTransformBase;
@@ -56,7 +61,15 @@ Eigen::Vector3d worldTranslationBase;
 Eigen::Matrix3d relRotationBase;
 Eigen::Matrix3d worldRotationBase;
 
-//output file
+// ZED objects
+sl::Camera zed;
+sl::Pose camera_pose;
+std::thread zed_callback;
+bool quit = false;
+
+const int MAX_CHAR = 128;
+
+// Output files
 ofstream q_out_file("../../24-ParametricIdentification-Waist/simOutData/qWaistData.txt");
 ofstream dq_out_file("../../24-ParametricIdentification-Waist/simOutData/dqWaistData.txt");
 ofstream ddq_out_file("../../24-ParametricIdentification-Waist/simOutData/ddqWaistData.txt");
@@ -65,7 +78,7 @@ ofstream Cg_out_file("../../24-ParametricIdentification-Waist/simOutData/cgWaist
 ofstream T_out_file("../../24-ParametricIdentification-Waist/simOutData/torqueWaistData.txt");
 ofstream time_out_file("../../24-ParametricIdentification-Waist/simOutData/timeWaistData.txt");
 
-//Used for constant forward/backward motion of waist
+// Used for constant forward/backward motion of waist
 double pi = 3.14159;
 int dir = 0;
 double maxPos = 5*pi/6;
@@ -77,6 +90,12 @@ int mRecordNum = 1;
 int mTotalRecorded = 0;
 
 bool endfile = false;
+
+// Function prototypes
+// void startZED();
+// void runZED();
+// void closeZED();
+// void transformZEDPose(sl::Transform &pose, float tx);
 
 //==========================================================================
 Controller::Controller(SkeletonPtr _robot)
@@ -112,6 +131,7 @@ Controller::Controller(SkeletonPtr _robot)
   baseNode = mRobot->getBodyNode(0);
   spineNode = mRobot->getBodyNode(1);
   bracketNode = mRobot->getBodyNode(2);
+  zedHolderNode = mRobot->getBodyNode(3);
 }
 
 //=========================================================================
@@ -180,14 +200,18 @@ void Controller::update() {
     // mRecordNum++;
     // mTotalRecorded++;
 
+    // Grab transform of ZED Camera
 
     // Calculate angle of base from torso and waist orientation
     // Get transformations
     worldTransformBracket = bracketNode->getTransform();
+    relTransformCH = zedHolderNode->getTransform(zedCameraNode);
+    relTransformHB = bracketNode->getTransform(zedHolderNode);
     relTransformBS = spineNode->getTransform(bracketNode);
     relTransformSB = baseNode->getTransform(spineNode);
     // Multiply transformations
-    relTransformBase = worldTransformBracket*relTransformBS*relTransformSB;
+    // relTransformBase = worldTransformBracket*relTransformBS*relTransformSB;
+    relTransformBase = worldTransformCamera*relTransformCH*relTransformHB*relTransformBS*relTransformSB;
 
     // Get translation and rotation from above computation
     relTranslationBase = relTransformBase.translation();
@@ -293,4 +317,46 @@ void Controller::recordData(int recordNum){
 //=========================================================================
 void Controller::keyboard(unsigned char /*_key*/, int /*_x*/, int /*_y*/) {
 
+}
+
+void Controller::startZED(){
+  quit = false;
+  zed_callback = std::thread(runZED);
+}
+
+// Get transform to center of camera and upate transform isometry
+void Controller::runZED(){
+  // Get the distance between the center of the camera and the left eye
+  float translation_left_to_center = zed.getCameraInformation().calibration_parameters.T.x * 0.5f;
+
+  if (zed.grab() == SUCCESS) {
+    // Get the position of the camera in a fixed reference frame (the World Frame)
+    TRACKING_STATE tracking_state = zed.getPosition(camera_pose, sl::REFERENCE_FRAME_WORLD);
+    if (tracking_state == TRACKING_STATE_OK) {
+      // Get the pose at the center of the camera (baseline/2 on X axis)
+      transformPose(camera_pose.pose_data, translation_left_to_center);
+      // Get quaternion, rotation and translation
+      sl::float4 quaternion = camera_pose.getOrientation();
+      // Use quaternions for transforms. Use rotation for Euler Angles
+      sl::float3 rotation = camera_pose.getEulerAngles();
+      sl::float3 translation = camera_pose.getTranslation();
+    }
+  }
+}
+
+void Controller::closeZED(){
+    quit = true;
+    zed_callback.join();
+    zed.disableTracking("./ZED_spatial_memory"); // Record an area file
+
+    zed.close();
+}
+
+void Controller::transformZEDPose(sl::Transform &pose, float tx){
+    sl::Transform transform_;
+    transform_.setIdentity();
+    // Move the tracking frame by tx along the X axis
+    transform_.tx = tx;
+    // Apply the transformation
+    pose = Transform::inverse(transform_) * pose * transform_;
 }
