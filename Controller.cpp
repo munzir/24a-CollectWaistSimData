@@ -40,15 +40,16 @@
 using namespace std;
 using namespace dart;
 using namespace dart::dynamics;
-using namespace sl;
+// using namespace sl;
 
 // Transform objects
 dart::dynamics::BodyNode* baseNode;
 dart::dynamics::BodyNode* spineNode;
 dart::dynamics::BodyNode* bracketNode;
 dart::dynamics::BodyNode* zedHolderNode;
+dart::dynamics::BodyNode* zedCameraNode;
 
-Eigen::Isometry3d worldTransformBracket;
+Eigen::Isometry3d worldTransformCamera;
 Eigen::Isometry3d relTransformCH;
 Eigen::Isometry3d relTransformHB;
 Eigen::Isometry3d relTransformBS;
@@ -62,12 +63,12 @@ Eigen::Matrix3d relRotationBase;
 Eigen::Matrix3d worldRotationBase;
 
 // ZED objects
-sl::Camera zed;
-sl::Pose camera_pose;
-std::thread zed_callback;
-bool quit = false;
+// sl::Camera zed;
+// sl::Pose camera_pose;
+// std::thread zed_callback;
+// bool quit = false;
 
-const int MAX_CHAR = 128;
+// const int MAX_CHAR = 128;
 
 // Output files
 ofstream q_out_file("../../24-ParametricIdentification-Waist/simOutData/qWaistData.txt");
@@ -132,6 +133,7 @@ Controller::Controller(SkeletonPtr _robot)
   spineNode = mRobot->getBodyNode(1);
   bracketNode = mRobot->getBodyNode(2);
   zedHolderNode = mRobot->getBodyNode(3);
+  zedCameraNode = mRobot->getBodyNode(4);
 }
 
 //=========================================================================
@@ -146,30 +148,6 @@ double error(double dq) {
 
 //=========================================================================
 void Controller::update() {
-
-  // Get the stuff that we need for the robot
-  Eigen::MatrixXd M     = mRobot->getMassMatrix();                // n x n
-  Eigen::VectorXd Cg    = mRobot->getCoriolisAndGravityForces();  // n x 1
-  Eigen::VectorXd q     = mRobot->getPositions();                 // n x 1
-  Eigen::VectorXd dq    = mRobot->getVelocities();                // n x 1
-
-  qref = q;
-  dqref << 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;
-  qref(0) += A*cos(b*mTime);
-  Eigen::VectorXd ddqref = -mKp*(q - qref) - mKv*(dq - dqref); // n x 1
-
-  mTime += 0.001;
-  mForces = M*ddqref + Cg;
-
-  //Incorporate error in mForce
-  double errCoeff = 6.0; //random value
-  mForceErr = mForces(0) + errCoeff*error(dq(0));
-
-  // Apply the joint space forces to the robot
-    // mRobot->setForces(mForces);
-  	// mRobot->getDof(0)->setForce(mForceErr);
-
-
   //Simply set the velocity of the waist (testing zero accel case)
   if(dir == 1){
     mRobot->getDof(0)->setVelocity(1);
@@ -204,29 +182,63 @@ void Controller::update() {
 
     // Calculate angle of base from torso and waist orientation
     // Get transformations
-    worldTransformBracket = bracketNode->getTransform();
+    worldTransformCamera = zedCameraNode->getTransform();
     relTransformCH = zedHolderNode->getTransform(zedCameraNode);
     relTransformHB = bracketNode->getTransform(zedHolderNode);
     relTransformBS = spineNode->getTransform(bracketNode);
     relTransformSB = baseNode->getTransform(spineNode);
     // Multiply transformations
     // relTransformBase = worldTransformBracket*relTransformBS*relTransformSB;
-    relTransformBase = worldTransformCamera*relTransformCH*relTransformHB*relTransformBS*relTransformSB;
+    relTransformBase = worldTransformCamera*relTransformCH*relTransformHB*relTransformBS;//*relTransformSB;
 
     // Get translation and rotation from above computation
     relTranslationBase = relTransformBase.translation();
-    relRotationBase = relTransformBase.rotation
+    relRotationBase = relTransformBase.rotation();
     // Get translation and rotation directly
-    worldTranslationBase = baseNode->getTransform().translation();
-    worldRotationBase = baseNode->getTransform().rotation();
+    worldTranslationBase = spineNode->getTransform().translation();
+    worldRotationBase = spineNode->getTransform().rotation();
 
     // Print out both computed and directly-derived transformations to compare
-    cout << "RelTrans: " << relTranslationBase(0) << " " << relTranslationBase(1) << " " << relTranslationBase(2) << endl;
-    cout << "WrdTrans: " << worldTranslationBase(0) << " " << worldTranslationBase(1) << " " << worldTranslationBase(2) << endl;
-    cout << "RelRot: " << relRotationBase(0) << " " << relRotationBase(1) << " " << relRotationBase(2) << " " << relRotationBase(3) << " " << relRotationBase(4) << " " << relRotationBase(5) << " " << relRotationBase(6) << " " << relRotationBase(7) << " " << relRotationBase(8) << endl;
-    cout << "WrdRot: " << worldRotationBase(0) << " " << worldRotationBase(1) << " " << worldRotationBase(2) << " " << worldRotationBase(3) << " " << worldRotationBase(4) << " " << worldRotationBase(5) << " " << worldRotationBase(6) << " " << worldRotationBase(7) << " " << worldRotationBase(8) << endl;
-    cout << endl;
+    cout << "RelTrans:   " << relTranslationBase(0) << "   " << relTranslationBase(1) << "   " << relTranslationBase(2) << endl;
+    cout << "WrdTrans:   " << worldTranslationBase(0) << "   " << worldTranslationBase(1) << "   " << worldTranslationBase(2) << endl;
+    cout << "RelRot: " << "   " << relRotationBase(0) << "   " << relRotationBase(1) << "   " << relRotationBase(2)
+      << "   " << relRotationBase(3) << "   " << relRotationBase(4) << "   " << relRotationBase(5)
+      << "   " << relRotationBase(6) << "   " << relRotationBase(7) << "   " << relRotationBase(8) << endl;
+    cout << "WrdRot: " << "   " << worldRotationBase(0) << "   " << worldRotationBase(1) << "   " << worldRotationBase(2) 
+      << "   " << worldRotationBase(3) << "   " << worldRotationBase(4) << "   " << worldRotationBase(5)
+      << "   " << worldRotationBase(6) << "   " << worldRotationBase(7) << "   " << worldRotationBase(8) << endl;
+    cout << endl << endl;
+
+    Eigen::Matrix4d matCam = transform2Mat(worldTransformCamera);
+    Eigen::Matrix4d matCH = transform2Mat(relTransformCH);
+    Eigen::Matrix4d matHB = transform2Mat(relTransformHB);
+    Eigen::Matrix4d matBS = transform2Mat(relTransformBS);
+
+    Eigen::Matrix4d matTransSpine = matCam*matCH*matHB*matBS;
+
+    cout << "RelRot: " << endl 
+      << "   " << matTransSpine(0) << "   " << matTransSpine(4) << "   " << matTransSpine(8) << "   " << matTransSpine(12) << endl
+      << "   " << matTransSpine(1) << "   " << matTransSpine(5) << "   " << matTransSpine(9) << "   " << matTransSpine(13) << endl
+      << "   " << matTransSpine(2) << "   " << matTransSpine(6) << "   " << matTransSpine(10) << "   " << matTransSpine(14) << endl
+      << "   " << matTransSpine(3) << "   " << matTransSpine(7) << "   " << matTransSpine(11) << "   " << matTransSpine(15) << endl;
   }
+}
+
+Eigen::Matrix4d Controller::transform2Mat(Eigen::Isometry3d iso){
+  Eigen::Matrix4d mat;
+  Eigen::Vector3d translation = iso.translation();
+  Eigen::Matrix3d rotation = iso.rotation();
+  mat.block<3,3>(0,0) = rotation;
+  mat(0,3) = translation(0);
+  mat(1,3) = translation(1);
+  mat(2,3) = translation(2);
+  
+  mat(3,0) = 0;
+  mat(3,1) = 0;
+  mat(3,2) = 0;
+  mat(3,3) = 1;
+
+  return mat;
 }
 
 //=========================================================================
@@ -276,15 +288,17 @@ void Controller::stepPose(int lineNum) {
       endfile = true;
       break;
     }
-
   }
+
   if(endfile){
     cout << "Reached EOF" << endl << endl << endl;std::exit(0);
   }
   in_file.close();
-  //set position for all joints except waist
-  for(int k = 1; k<17; k++){
-    mRobot->getDof(k)->setPosition(vect(k));
+  //set position for all joints except waist, zedHolder and zedCam
+  mRobot->getDof(1)->setPosition(vect(1));
+  mRobot->getDof(2)->setPosition(vect(2));
+  for(int k = 5; k<17; k++){
+      mRobot->getDof(k)->setPosition(vect(k-2));
   }
 }
 
@@ -320,43 +334,43 @@ void Controller::keyboard(unsigned char /*_key*/, int /*_x*/, int /*_y*/) {
 }
 
 void Controller::startZED(){
-  quit = false;
-  zed_callback = std::thread(runZED);
+  // quit = false;
+  // zed_callback = std::thread(runZED);
 }
 
 // Get transform to center of camera and upate transform isometry
 void Controller::runZED(){
   // Get the distance between the center of the camera and the left eye
-  float translation_left_to_center = zed.getCameraInformation().calibration_parameters.T.x * 0.5f;
+  // float translation_left_to_center = zed.getCameraInformation().calibration_parameters.T.x * 0.5f;
 
-  if (zed.grab() == SUCCESS) {
-    // Get the position of the camera in a fixed reference frame (the World Frame)
-    TRACKING_STATE tracking_state = zed.getPosition(camera_pose, sl::REFERENCE_FRAME_WORLD);
-    if (tracking_state == TRACKING_STATE_OK) {
-      // Get the pose at the center of the camera (baseline/2 on X axis)
-      transformPose(camera_pose.pose_data, translation_left_to_center);
-      // Get quaternion, rotation and translation
-      sl::float4 quaternion = camera_pose.getOrientation();
-      // Use quaternions for transforms. Use rotation for Euler Angles
-      sl::float3 rotation = camera_pose.getEulerAngles();
-      sl::float3 translation = camera_pose.getTranslation();
-    }
-  }
+  // if (zed.grab() == SUCCESS) {
+  //   // Get the position of the camera in a fixed reference frame (the World Frame)
+  //   TRACKING_STATE tracking_state = zed.getPosition(camera_pose, sl::REFERENCE_FRAME_WORLD);
+  //   if (tracking_state == TRACKING_STATE_OK) {
+  //     // Get the pose at the center of the camera (baseline/2 on X axis)
+  //     transformPose(camera_pose.pose_data, translation_left_to_center);
+  //     // Get quaternion, rotation and translation
+  //     sl::float4 quaternion = camera_pose.getOrientation();
+  //     // Use quaternions for transforms. Use rotation for Euler Angles
+  //     sl::float3 rotation = camera_pose.getEulerAngles();
+  //     sl::float3 translation = camera_pose.getTranslation();
+  //   }
+  // }
 }
 
 void Controller::closeZED(){
-    quit = true;
-    zed_callback.join();
-    zed.disableTracking("./ZED_spatial_memory"); // Record an area file
+    // quit = true;
+    // zed_callback.join();
+    // zed.disableTracking("./ZED_spatial_memory"); // Record an area file
 
-    zed.close();
+    // zed.close();
 }
 
-void Controller::transformZEDPose(sl::Transform &pose, float tx){
-    sl::Transform transform_;
-    transform_.setIdentity();
-    // Move the tracking frame by tx along the X axis
-    transform_.tx = tx;
-    // Apply the transformation
-    pose = Transform::inverse(transform_) * pose * transform_;
-}
+// void Controller::transformZEDPose(sl::Transform &pose, float tx){
+//     // sl::Transform transform_;
+//     // transform_.setIdentity();
+//     // // Move the tracking frame by tx along the X axis
+//     // transform_.tx = tx;
+//     // // Apply the transformation
+//     // pose = Transform::inverse(transform_) * pose * transform_;
+// }
