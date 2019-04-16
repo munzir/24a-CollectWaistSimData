@@ -36,6 +36,9 @@
 #include <string>
 #include <dart/dart.hpp>
 
+//ZED include
+#include <sl/Camera.hpp>
+
 #define DOF 17
 
 /// \brief Operational space controller for 6-dof manipulator
@@ -61,6 +64,18 @@ public:
 
   /// \brief Keyboard control
   virtual void keyboard(unsigned char _key, int _x, int _y);
+
+  // \ Zed start function
+  void startZED();
+
+  // \ Zed run function
+  void runZED();
+
+  // \ Zed close function
+  void closeZED();
+
+  // \ Zed transform function
+  void tranformZEDPose(sl::Transform &pose, float tx);
 
 private:
 
